@@ -1,0 +1,27 @@
+{:paths ["dev" "notebooks" "src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}
+        io.github.nextjournal/clerk {:mvn/version "0.6.387"}
+        org.clojure/data.csv {:mvn/version "1.0.0"}
+        meta-csv/meta-csv {:mvn/version "0.1.0"}
+        net.mikera/core.matrix {:mvn/version "0.62.0"}}
+
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps  {lambdaisland/kaocha {:mvn/version "1.60.977"}
+                       lambdaisland/kaocha-cloverage {:mvn/version "1.0.75"}
+                       nubank/matcher-combinators {:mvn/version "3.3.1"}
+                       nubank/state-flow {:mvn/version "5.14.0"}}
+         :main-opts   ["-m" "kaocha.runner"]}
+
+  :clojure-lsp {:replace-deps {com.github.clojure-lsp/clojure-lsp {:mvn/version "2022.01.03-19.46.10"}}
+                :main-opts ["-m" "clojure-lsp.main"]}
+
+  :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
+            :exec-fn hf.depstar/uberjar
+            :exec-args {:jar "service.jar"
+                        :aot true
+                        :main-class super-dice-roll.server}}
+
+  :nrepl {:extra-deps {cider/cider-nrepl {:mvn/version "0.28.0"}}
+          :jvm-opts ["-Xmx8G" "-XX:-OmitStackTraceInFastThrow"]
+          :main-opts ["-m" "nrepl.cmdline" "--middleware" "[cider.nrepl/cider-middleware]"]}}}
